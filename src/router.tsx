@@ -8,6 +8,8 @@ import NotFound from "./Pages/NotFound/NotFound";
 import Welcome from "./Pages/Welcome/Welcome";
 
 import Loading from "./Components/Loading/Loading";
+import WithAuth from "./Components/WithAuth/WithAuth";
+import MainMenu from "./Pages/MainMenu/MainMenu";
 
 
 
@@ -33,7 +35,7 @@ const router = createBrowserRouter([
                 </Suspense>),
             },
             {
-                path: 'login',
+                path: '/login',
                 loader: redirectIfUser,
                 element: (
                 <Suspense fallback={<Loading/>}>
@@ -42,13 +44,21 @@ const router = createBrowserRouter([
 
             },
             {
-                path: 'register',
+                path: '/register',
                 element: (
                 <Suspense fallback={<Loading/>}>
                     <Register/>
                 </Suspense>)
             },
         ]
+    },
+    {
+        path: '/mainMenu',
+        element: (
+            <WithAuth redirectPath="/">
+                <MainMenu />
+            </WithAuth>
+        )
     },
     {
         path: '*',

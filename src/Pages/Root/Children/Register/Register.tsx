@@ -5,6 +5,8 @@ import { RootState } from "../../../../state/store";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from '../../../../state/store';
 import { registerAsync } from '../../../../state/authorisation/authorisationSlice'
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
     login: z.string().min(3).max(30),
@@ -18,10 +20,17 @@ const Register = () => {
 
     const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm<RegisterFormFields>({resolver: zodResolver(schema)})
     const dispatch = useDispatch<AppDispatch>();
-    const { errors:registrationErrors } = useSelector((state: RootState) => state.authorisation);
+    const { errors:registrationErrors, isAuth } = useSelector((state: RootState) => state.authorisation);
+    const navigate = useNavigate();
     const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
         dispatch(registerAsync({login: data.login, email: data.email, password: data.password}))
     }
+
+    useEffect(() => {
+        if(isAuth) {
+            navigate('/mainMenu')
+        }
+    })
     
 
     return (
