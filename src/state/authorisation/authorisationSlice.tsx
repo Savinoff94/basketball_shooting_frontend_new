@@ -58,9 +58,13 @@ const authorisationSlice = createSlice({
             .addCase(loginAsync.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(loginAsync.rejected, (state) => {
-                //TODO
+            .addCase(loginAsync.rejected, (state, action: PayloadAction<AuthorisationErrorPayload | undefined>) => {
                 state.isLoading = false;
+                if (action.payload) {
+                    state.errors = action.payload;
+                } else {
+                    state.errors = { message: ['Login failed'] };
+                }
             })
             .addCase(loginAsync.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
                 localStorage.setItem('token', action.payload.accessToken);
@@ -115,11 +119,18 @@ export interface LoginArgs {
     email: string,
     password: string
 }
-// WARNING: on backend login works with login, not email
-export const loginAsync = createAsyncThunk(
+
+export const loginAsync = createAsyncThunk<AuthResponse, LoginArgs, {rejectValue: AuthorisationErrorPayload}>(
     'login',
-    async ({email, password} : LoginArgs) => {
-        return await AuthService.login(email, password)
+    async ({email, password} : LoginArgs, {rejectWithValue}) => {
+        try {
+            return await AuthService.login(email, password)
+        } catch (error) {
+            if(axios.isAxiosError(error) && error.response) {
+                return rejectWithValue(error.response.data.errors as AuthorisationErrorPayload);
+            }
+            return rejectWithValue({ message: ['An unexpected error occurred'] } as AuthorisationErrorPayload);
+        }
     }
 )
 
