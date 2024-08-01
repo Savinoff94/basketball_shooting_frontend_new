@@ -133,7 +133,7 @@ export const loginAsync = createAsyncThunk<AuthResponse, LoginArgs, {rejectValue
         }
     }
 )
-
+//TODO
 export const checkAuthAsync = createAsyncThunk(
     'checkAuth',
     async () => {

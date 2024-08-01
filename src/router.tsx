@@ -10,13 +10,17 @@ import Welcome from "./Pages/Welcome/Welcome";
 import Loading from "./Components/Loading/Loading";
 import WithAuth from "./Components/WithAuth/WithAuth";
 import MainMenu from "./Pages/MainMenu/MainMenu";
+import Social from "./Pages/Social/Social";
+import MyFriends from "./Pages/Social/SubPages/MyFreinds/MyFriends";
+import SearchFriends from "./Pages/Social/SubPages/SearchFriends/SearchFriends";
+import PendingInvitations from "./Pages/Social/SubPages/PendingInvitations/PendingInvitations";
 
 
 
 
 
 
-
+// TODO
 const redirectIfUser = () => {
 
     return null
@@ -59,6 +63,39 @@ const router = createBrowserRouter([
                 <MainMenu />
             </WithAuth>
         )
+    },
+    {
+        path: "/social",
+        element: <Social/>,
+        children: [
+            {
+                index: true,
+                element: (
+                <Suspense fallback={<Loading/>}>
+                    <WithAuth redirectPath="/">
+                        <SearchFriends/>
+                    </WithAuth>
+                </Suspense>)
+            },
+            {
+                path: 'social/my',
+                element: (
+                <Suspense fallback={<Loading/>}>
+                    <WithAuth redirectPath="/">
+                        <MyFriends/>
+                    </WithAuth>
+                </Suspense>)
+            },
+            {
+                path: 'social/pendingInvitations',
+                element: (
+                <Suspense fallback={<Loading/>}>
+                    <WithAuth redirectPath="/">
+                        <PendingInvitations/>
+                    </WithAuth>
+                </Suspense>)
+            },
+        ]
     },
     {
         path: '*',
