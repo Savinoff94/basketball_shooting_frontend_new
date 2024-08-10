@@ -14,6 +14,11 @@ import Social from "./Pages/Social/Social";
 import MyFriends from "./Pages/Social/SubPages/MyFreinds/MyFriends";
 import SearchFriends from "./Pages/Social/SubPages/SearchFriends/SearchFriends";
 import PendingInvitations from "./Pages/Social/SubPages/PendingInvitations/PendingInvitations";
+import TrainingRoot from "./Pages/Training/SubPages/TrainingRoot/TrainingRoot";
+import ChooseSquad from "./Pages/Training/SubPages/ChooseSquad/ChooseSquad";
+import ChooseShooter from "./Pages/Training/SubPages/ChooseShooter/ChooseShooter";
+import Shooting from "./Pages/Training/SubPages/Shooting/Shooting";
+import ChooseSpot from "./Pages/Training/SubPages/ChooseSpot/ChooseSpot";
 
 
 
@@ -94,6 +99,52 @@ const router = createBrowserRouter([
                         <PendingInvitations/>
                     </WithAuth>
                 </Suspense>)
+            },
+        ]
+    },
+    {
+        path: "/training",
+        element: <TrainingRoot/>,
+        children: [
+            {
+                index: true,
+                element: (
+                    <Suspense fallback={<Loading/>}>
+                        <WithAuth redirectPath="/">
+                            <ChooseSquad/>
+                        </WithAuth>
+                    </Suspense>
+                )
+            },
+            {
+                path: 'training/chooseShooter',
+                element: (
+                    <Suspense fallback={<Loading/>}>
+                        <WithAuth redirectPath="/">
+                            <ChooseShooter/>
+                        </WithAuth>
+                    </Suspense>
+                )
+            },
+            {
+                path: 'training/shooting',
+                element: (
+                    <Suspense fallback={<Loading/>}>
+                        <WithAuth redirectPath="/">
+                            <Shooting/>
+                        </WithAuth>
+                    </Suspense>
+                )
+            },
+            {
+                path: 'training/chooseSpot',
+                element: (
+                    <Suspense fallback={<Loading/>}>
+                        <WithAuth redirectPath="/">
+                            <ChooseSpot/>
+                        </WithAuth>
+                    </Suspense>
+                )
             },
         ]
     },

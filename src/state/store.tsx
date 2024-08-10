@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authorisationSlice from "./authorisation/authorisationSlice";
+import shootingTrainingSlice from "./shootingTraining/shootingTrainingSlice";
 
 export const store = configureStore({
     reducer: {
-        authorisation: authorisationSlice
+        authorisation: authorisationSlice,
+        shootingTraining: shootingTrainingSlice
     }
 })
 
