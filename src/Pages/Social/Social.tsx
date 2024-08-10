@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import useFetchUserConnections from "./utilities/hooks";
 
 function Social() {
-    //TODO Error handling all page
+    //TODO Error handling all page - check
+    //Pagination on search
 
     useFetchUserConnections();
     return (

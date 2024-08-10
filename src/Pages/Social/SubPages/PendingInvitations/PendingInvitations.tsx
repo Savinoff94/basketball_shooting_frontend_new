@@ -3,9 +3,10 @@ import useFetchUserConnections from "../../utilities/hooks";
 import PendingOtherUserFriendRequestUserLi from "../components/PendingOtherUserFriendRequestUserLi";
 import PendingCurrentUserFriendRequestUserLi from "../components/PendingCurrentUserFriendRequestUserLi";
 import { UserConnections } from "../../../../types/usersBasicTypes";
+import axios from "axios";
 
 export default function PendingInvitations() {
-    const {data, isLoading} = useFetchUserConnections();
+    const {data, isLoading, error} = useFetchUserConnections();
 
     const {pendingOtherUsersFriendRequests = {}, pendingThisUsersFriendRequests = {}} = data as UserConnections || {};
 
@@ -14,6 +15,7 @@ export default function PendingInvitations() {
      
     return (
         <>
+        {error && axios.isAxiosError(error) && error.response  ? error.response?.data.message : ''}
         <h2>
             Pending friends invitations
         </h2>

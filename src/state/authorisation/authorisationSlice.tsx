@@ -8,8 +8,8 @@ import { API_URL } from "../../http";
 export interface UserState {
     user: IUser,
     isAuth: boolean,
-    isLoading: boolean
-    errors: AuthorisationErrorPayload
+    isLoading: boolean,
+    errors: AuthorisationErrorPayload,
 }
 
 const initialState: UserState = {
